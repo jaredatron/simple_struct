@@ -1,6 +1,6 @@
 # SimpleStruct
 
-TODO: Write a gem description
+SimpleStruct is a lighter weight struct then ruby's standard struct in that it doest not include Enumerable.
 
 ## Installation
 
@@ -18,7 +18,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    class Car < SimpleStruct.new(:color, :size)
+    end
+
+    # or
+
+    Car = SimpleStruct.new(:color, :size) do
+    end
 
 ## Contributing
 
