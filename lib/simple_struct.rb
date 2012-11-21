@@ -17,11 +17,14 @@ class SimpleStruct
   end
 
   def self.inspect
-    %[#{to_s}(#{members*', '})]
+    self == SimpleStruct ? super : %[#{to_s}(#{members*', '})]
   end
 
   def inspect
-    %(#<#{self.class}: #{self.class.members.map{|member| "#{member}=#{send(member).inspect}"}.join(', ')}>)
+    members = self.class.members.map do |member|
+      member.to_s + '=' + instance_variable_get("@#{member}").inspect
+    end
+    %(#<#{self.class}: #{members.join(', ')}>)
   end
 
 end
