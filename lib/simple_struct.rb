@@ -1,6 +1,6 @@
 class SimpleStruct
 
-  VERSION = "0.0.1"
+  VERSION = "0.0.2"
 
   def self.new *members, &block
     subclass = Class.new(self)
