@@ -1,6 +1,6 @@
 class SimpleStruct
 
-  VERSION = "0.0.2"
+  VERSION = "0.0.3"
 
   def self.new *members, &block
     subclass = Class.new(self)
@@ -17,7 +17,8 @@ class SimpleStruct
   end
 
   def self.inspect
-    self == SimpleStruct ? super : %[#{to_s}(#{members*', '})]
+    return super unless self.respond_to?(:members)
+    %[#{to_s}(#{members*', '})]
   end
 
   def inspect
