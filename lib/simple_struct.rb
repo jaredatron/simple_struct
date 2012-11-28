@@ -1,10 +1,10 @@
 class SimpleStruct
 
-  VERSION = "0.0.3"
+  VERSION = "0.0.4"
 
   def self.new *members, &block
     subclass = Class.new(self)
-    subclass.define_singleton_method(:new, self.superclass.method(:new))
+    subclass.define_singleton_method(:new, Object.method(:new))
     subclass.define_singleton_method(:members){ members }
     subclass.class_eval(&block) if block_given?
     subclass
@@ -35,6 +35,11 @@ eval <<-RUBY if $0 == __FILE__
 
 require 'test/unit'
 
+class ComplexStruct < SimpleStruct
+end
+
+class GrowAFlower < ComplexStruct.new(:type, :count)
+end
 
 class MethodObjectTestUnitTestCase < Test::Unit::TestCase
 
@@ -51,6 +56,11 @@ class MethodObjectTestUnitTestCase < Test::Unit::TestCase
     assert !car_instance.public_methods.include?(:size)
     assert !car_instance.public_methods.include?(:size=)
     assert car_instance.is_a?(SimpleStruct), "Car is not a SimpleStruct"
+  end
+
+  def test_SimpleStruct_Subclass
+    assert_equal GrowAFlower.inspect, "GrowAFlower(type, count)"
+    assert_equal GrowAFlower.new(:rose, 12).inspect, "#<GrowAFlower: type=:rose, count=12>"
   end
 
 end
